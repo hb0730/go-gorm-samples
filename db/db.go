@@ -25,4 +25,10 @@ func init() {
 	DB.Debug()
 	DB.DisableNestedTransaction = false
 	DB.DisableForeignKeyConstraintWhenMigrating = true
+
+	AutoTable()
+}
+
+func AutoTable() {
+	DB.AutoMigrate(&User{})
 }
