@@ -11,3 +11,8 @@ func TestUserService_Insert(t *testing.T) {
 	service.Insert(user)
 	fmt.Printf("%v", user)
 }
+
+func TestUserService_TransactionTest(t *testing.T) {
+	service := NewService()
+	service.TransactionTest()
+}
