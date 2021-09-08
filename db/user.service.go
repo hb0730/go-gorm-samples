@@ -34,3 +34,10 @@ func (service UserService) TransactionTest() {
 		fmt.Printf("insert user failed:%v", err)
 	}
 }
+func (service UserService) DeleteById(id int) bool {
+	r, err := service.repository.DeleteById(id, User{})
+	if err != nil {
+		return false
+	}
+	return r == 1
+}

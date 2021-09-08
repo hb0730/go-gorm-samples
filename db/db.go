@@ -22,9 +22,10 @@ func init() {
 		SingularTable: true,
 		NoLowerCase:   false,
 	}
-	DB.Debug()
+	//DB.Logger=logger.Default
 	DB.DisableNestedTransaction = false
 	DB.DisableForeignKeyConstraintWhenMigrating = true
+	DB = DB.Debug()
 
 	AutoTable()
 }

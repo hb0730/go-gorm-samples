@@ -16,3 +16,8 @@ func TestUserService_TransactionTest(t *testing.T) {
 	service := NewService()
 	service.TransactionTest()
 }
+
+func TestUserService_DeleteById(t *testing.T) {
+	service := NewService()
+	service.DeleteById(1)
+}

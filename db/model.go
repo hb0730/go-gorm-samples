@@ -1,7 +1,18 @@
 package db
 
+type IModel interface {
+	GetId() int
+	IdColumnName() string
+}
 type Model struct {
 	Id int `gorm:"column:id;type:int;primaryKey;not null;autoIncrement;comment:'id'"`
+}
+
+func (model Model) GetId() int {
+	return model.Id
+}
+func (model Model) IdColumnName() string {
+	return "id"
 }
 
 type User struct {
