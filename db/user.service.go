@@ -8,12 +8,12 @@ type UserService struct {
 
 func NewService() UserService {
 	return UserService{
-		repository: NewUserRepository(DB),
+		repository: NewUserRepository(),
 	}
 }
 
 func (service UserService) Insert(user *User) {
-	_, err := service.repository.Insert(&user)
+	_, err := service.repository.Insert(&user, DB)
 	if err != nil {
 		fmt.Printf("insert user failed:%v", err)
 	}
