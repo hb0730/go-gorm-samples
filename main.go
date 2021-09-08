@@ -15,7 +15,8 @@ func main() {
 }
 func userTest() {
 	user := User{}
-	user.Insert()
+	user.TxRollback2()
+	//user.Insert()
 	//user.CreateTable()
 	//user.InsertBatch()
 	//users := user.FindByName("晓")

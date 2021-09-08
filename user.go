@@ -67,6 +67,25 @@ func (u User) TxRollback(id uint) bool {
 	return false
 
 }
+func (u User) TxRollback2() {
+	err := db.Transaction(func(tx *gorm.DB) error {
+		u.Insert1()
+		u.Insert2()
+		return errors.New("测试事务")
+	})
+	if err != nil {
+		fmt.Printf("%v", err)
+	}
+}
+func (u User) Insert1() {
+	user := User{Name: "事务1", Age: 110}
+	db.Create(&user)
+
+}
+func (u User) Insert2() {
+	user := User{Name: "事务2", Age: 110}
+	db.Create(&user)
+}
 
 type User struct {
 	ID   uint   `gorm:"column:id;not null;type:uint;primaryKey;autoIncrement;comment:'id'"`
