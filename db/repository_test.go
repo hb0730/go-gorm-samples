@@ -22,3 +22,12 @@ func TestBaseMapper_Select(t *testing.T) {
 	fmt.Printf("%v", users)
 
 }
+
+func TestBaseMapper_Select_between(t *testing.T) {
+	mapper := BaseMapper{DB: DB}
+	wrapper := conditions.NewWrapper()
+	wrapper.Compare = wrapper.Between("id", 1, 3)
+	users := []User{}
+	mapper.Select(wrapper, &users)
+	fmt.Printf("%v", users)
+}
