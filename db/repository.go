@@ -1,14 +1,13 @@
 package db
 
 import (
-	"errors"
+	"go-gorm-samples/conditions"
 	"gorm.io/gorm"
 )
 
 type Mapper interface {
 	Insert(value interface{}) (int64, error)
-	InsertBatch(values []interface{}) (int64, error)
-	DeleteById(id int, model interface{}) (int64, error)
+	Select(wrapper conditions.Wrapper, value []interface{}) (int64, error)
 }
 type BaseMapper struct {
 	DB *gorm.DB
@@ -19,15 +18,11 @@ func (mapper *BaseMapper) Insert(value interface{}) (int64, error) {
 	return result.RowsAffected, result.Error
 }
 
-func (mapper *BaseMapper) InsertBatch(values []interface{}) (int64, error) {
-	result := mapper.DB.CreateInBatches(values, len(values))
-	return result.RowsAffected, result.Error
-}
-func (mapper *BaseMapper) DeleteById(id int, model interface{}) (int64, error) {
-	value, ok := model.(IModel)
-	if !ok {
-		return 0, errors.New("unsupported type")
+func (mapper BaseMapper) Select(wrapper conditions.Wrapper, value interface{}) (int64, error) {
+	expressions := wrapper.GetExpressions()
+	for _, expression := range expressions {
+		mapper.DB.Statement.AddClause(expression)
 	}
-	result := mapper.DB.Where(value.IdColumnName()+` = ?`, id).Delete(model)
+	result := mapper.DB.Find(value)
 	return result.RowsAffected, result.Error
 }
