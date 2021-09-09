@@ -14,9 +14,11 @@ func TestBaseMapper_Insert(t *testing.T) {
 }
 func TestBaseMapper_Select(t *testing.T) {
 	mapper := BaseMapper{DB: DB}
-	wrapper := conditions.Wrapper{}
+	wrapper := conditions.NewWrapper()
 	wrapper.Func = wrapper.OrderByDesc("age", "name")
+	wrapper.Compare = wrapper.Eq("id", 1).Ne("name", "cc")
 	users := []User{}
 	mapper.Select(wrapper, &users)
 	fmt.Printf("%v", users)
+
 }
