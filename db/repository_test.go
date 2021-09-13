@@ -31,3 +31,17 @@ func TestBaseMapper_Select_between(t *testing.T) {
 	mapper.Select(wrapper, &users)
 	fmt.Printf("%v", users)
 }
+
+func TestBaseMapper_Find(t *testing.T) {
+	var user User
+	mapper := BaseMapper{DB: DB}
+	mapper.Find(&user)
+	fmt.Printf("%v", user)
+}
+
+func TestBaseMapper_FindArray(t *testing.T) {
+	var users []User
+	mapper := BaseMapper{DB: DB}
+	mapper.FindArray(users)
+	fmt.Printf("%v", users)
+}
